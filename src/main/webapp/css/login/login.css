@@ -1,0 +1,33 @@
+h1 {
+    text-align: center;
+}
+
+.content {
+    width: 50%;
+    margin: auto;
+}
+
+.content .form-group label {
+    width: 15%;
+}
+
+.content .form-group input {
+    min-width: 40%;
+    height: 22px;
+}
+
+.content .form-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.content .row {
+    margin-top: 10px;
+}
+
+.content .btn-group {
+    text-align: center;
+    padding: 4px 8px;
+}

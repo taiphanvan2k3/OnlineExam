@@ -1,0 +1,40 @@
+.container {
+    display: flex;
+}
+
+.container .side-bar {
+    width: 230px;
+    height: 100vh;
+    background: #2A3F54;
+    color: #E7E7E7;
+}
+
+.container .top-side-bar {
+    background: #203040;
+    padding: 15px;
+}
+
+.container .top-side-bar p {
+    margin: 0;
+    color: white;
+    font-size: 24px;
+}
+
+.container .div-info p {
+	text-align: center;
+}
+
+.container .side-bar .sub-menu {
+	display: inline-block;
+    height: 20px;
+    overflow: hidden;
+}
+
+.side-bar li{
+	width: 100%;
+	padding-left: 14px;	
+}
+
+.side-bar li:hover{
+	background: rgba(255,255,255,.06);
+}
