@@ -36,36 +36,30 @@
 	        </div>
         	<div class="nav">
 	          <ul>
-	            <li>
-	              <a href="./LoginController?action=index">Trang chủ</a>
-	            </li>
 	            <%
 	            	if(role.equals("sv")) {
 	            %>
-	            <li class="sub-menu" onclick="toggleSubmenu(this, event)">
-	              <a href="javascript: void(0)">Bài kiểm tra</a>
-	              <ul>
-	                <li>
-	                  <a href="./ExamController?action=do-exam">Làm bài kiểm tra</a>
-	                </li>
-	                <li>
-	                  <a href="./ExamController?action=view-history"> Lịch sử làm bài </a>
-	                </li>
-	              </ul>
+	            <li>
+	                <a href="./ExamController?action=do-exam">Làm bài kiểm tra</a>
 	            </li>
+	           	<li>
+	                  <a href="./ExamController?action=view-history">Lịch sử làm bài</a>
+	           	</li>
 	            <%
 	            	}else if(role.equals("gv")) {
 	            %>
-	            <li class="sub-menu" onclick="toggleSubmenu(this)">
-	              <a href="javascript: void(0)">Bài kiểm tra</a>
-	              <ul>
-	                <li>
+	            <li>
 	                  <a href="./ExamController?action=create-exam">Tạo bài kiểm tra</a>
-	                </li>
-	                <li>
-	                  <a href="./ExamController?action=view-history"> Xem lịch sử làm bài </a>
-	                </li>
-	              </ul>
+	            </li>
+	            <li>
+	                  <a href="./ExamController?action=view-history">Xem lịch sử làm bài</a>
+	            </li>
+	            <% } else if(role.equals("admin")) {%>
+	            <li>
+	                  <a href="./AccountController?action=create">Tạo tài khoản</a>
+	            </li>
+	            <li>
+	                  <a href="./SubjectController?action=create">Tạo môn học</a>
 	            </li>
 	            <% }%>
 	            <li>
@@ -83,16 +77,6 @@
 	    	 </div>
 	    </div>
  	</div>
- 	
- 	<script>
- 		function toggleSubmenu(element) {
- 			if(element.clientHeight == 20){
- 				element.style.height = "65px";
- 			}else {
- 				element.style.height = "20px";
- 			}
- 		}
- 	</script>
  </body>
 
 </html>
