@@ -5,7 +5,7 @@
  
 <jsp:attribute name="body_area">
   <div>
-    <p>Do exam</p>
+  	<p>Đây là trang chủ</p>
   </div>
 </jsp:attribute>
  

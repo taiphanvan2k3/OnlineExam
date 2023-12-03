@@ -5,7 +5,7 @@
  
 <jsp:attribute name="body_area">
   <div>
-    <button>Hello There</button>
+    <p>Trang làm bài thi</p>
   </div>
 </jsp:attribute>
  
