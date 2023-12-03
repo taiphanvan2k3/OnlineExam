@@ -1,12 +1,20 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
- 
-<t:_layout title="Trang chủ">
- 
-<jsp:attribute name="body_area">
-  <div>
-    <p>Trang làm bài thi</p>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tạo môn học-Trắc nghiệm online</title>
+<link rel="stylesheet" href="./css/common.css" />
+<link rel="stylesheet" href="./css/layout.css" />
+<link rel="stylesheet" href="./css/subject/create.css" />
+</head>
+<body>
+  <div class="container">
+    <%@include file="sidebar.jsp"%>
+    <div class="main-content">
+    </div>
   </div>
-</jsp:attribute>
- 
-</t:_layout>
+</body>
+</html>
