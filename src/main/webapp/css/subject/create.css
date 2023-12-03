@@ -1,0 +1,25 @@
+.content {
+	text-align: center;
+}
+
+.row {
+	display: flex;
+	margin-bottom: 10px;
+	justify-content: center;
+	align-content: center;
+}
+
+.row label {
+	width: 150px;
+	text-align: left;
+}
+
+.row input {
+	height: 22px;
+	width: 30%;
+}
+
+.btn-group button {
+	padding: 4px 8px;
+	margin-right: 10px;
+}
