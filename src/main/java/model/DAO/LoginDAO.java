@@ -21,6 +21,10 @@ public class LoginDAO {
 					if (rs.next()) {
 						user = new User();
 						user.setUsername(rs.getString("username"));
+						int role = rs.getInt("role");
+						user.setRole(role == 0 ? "admin" : role == 1 ? "gv" : "sv");
+						user.setFirstName(rs.getString("firstName"));
+						user.setLastName(rs.getString("lastName"));
 					}
 				} catch (Exception e) {
 					System.out.println(e.getMessage());

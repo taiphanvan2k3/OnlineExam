@@ -21,6 +21,10 @@ public class ExamController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String action = (String) request.getParameter("action");
+		if (action.equals("do-exam")) {
+			this.doExam(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -28,7 +32,11 @@ public class ExamController extends HttpServlet {
 		doGet(request, response);
 	}
 
-	private void doExam() {
-
+	private void doExam(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			response.sendRedirect(request.getContextPath() + "/do-exam.jsp");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
