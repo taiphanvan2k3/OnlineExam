@@ -6,7 +6,7 @@
 	display: flex;
 	margin-bottom: 10px;
 	justify-content: center;
-	align-content: center;
+	align-items: center;
 }
 
 .row label {
@@ -14,9 +14,19 @@
 	text-align: left;
 }
 
-.row input {
+.row input, .row textarea, .row select {
 	height: 22px;
 	width: 30%;
+}
+
+.row select {
+	height: 28px;
+}
+
+.row textarea {
+	height: inherit;
+	min-height: 20px;
+	resize: vertical;
 }
 
 .btn-group button {
