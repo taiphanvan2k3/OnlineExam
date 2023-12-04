@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import model.BEAN.Subject;
 import util.Utils;
 
 public class SubjectDAO {
@@ -21,6 +22,21 @@ public class SubjectDAO {
 		} catch (Exception e) {
 		}
 		return subjectIds;
+	}
+
+	public ArrayList<Subject> getAllSubjects() {
+		ArrayList<Subject> subjects = new ArrayList<>();
+		try {
+			Connection connection = Utils.getConnection();
+			String query = "select *from monhoc";
+			Statement st = connection.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			while (rs.next()) {
+				subjects.add(new Subject(rs.getString("id"), rs.getString("name")));
+			}
+		} catch (Exception e) {
+		}
+		return subjects;
 	}
 
 	public boolean createSubject(String id, String name) {

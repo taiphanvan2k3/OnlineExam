@@ -1,0 +1,29 @@
+.div-single, .div-multiple {
+	display: inline-block;
+}
+
+.div-types,.div-correct-answers {
+	margin-bottom: 10px;
+}
+
+.div-types .types {
+	width: 27%;
+	display: inline-block;
+	text-align: left;
+	padding-left: 110px;
+}
+
+.div-types .types label {
+	margin-right: 20px;
+}
+
+.div-correct-answers .div-single, .div-multiple {
+	width: 27%;
+	display: inline-block;
+	text-align: left;
+	padding-left: 110px;
+}
+
+.div-single label, .div-multiple label {
+	margin-right: 10px;
+}
