@@ -43,7 +43,7 @@ if (username == null || role == null) {
         <a href="./ExamController?action=create-exam">Tạo bài kiểm tra</a>
       </li>
       <li>
-        <a href="./ExamController?action=view-history">Xem lịch sử làm bài</a>
+        <a href="./ExamController?action=view-history">Danh sách bài kiểm tra đã tạo</a>
       </li>
       <%
       } else if (role.equals("admin")) {

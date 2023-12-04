@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -69,7 +68,6 @@ public class LoginController extends HttpServlet {
 		User user = (new LoginBO()).checkLogin(username, password);
 		String destination = "";
 		if (user != null) {
-			response.addCookie(new Cookie("username", username));
 			request.getSession().setAttribute("username", username);
 			request.getSession().setAttribute("fullName", user.getLastName() + " " + user.getFirstName());
 			request.getSession().setAttribute("role", user.getRole());
