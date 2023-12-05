@@ -1,33 +1,75 @@
-h1 {
-    text-align: center;
+.login-div {
+	margin-top: 10%;
+}
+
+.title {
+	color: #73879C; text-align : center;
+	position: relative;
+	width: 30%;
+	margin: auto;
+	text-align: center;
+}
+
+.title:before {
+	content: "";
+	height: 1px;
+	left: 10px;
+	top: 19px;
+	width: 20%;
+	position: absolute;
+	background: #7e7e7e;
+}
+
+.title:after {
+	content: "";
+	height: 1px;
+	right: 10px;
+	top: 19px;
+	width: 20%;
+	position: absolute;
+	background: #7e7e7e;
 }
 
 .content {
-    width: 50%;
-    margin: auto;
+	width: 50%;
+	margin: auto;
 }
 
 .content .form-group label {
-    width: 15%;
+	width: 15%;
 }
 
 .content .form-group input {
-    min-width: 40%;
-    height: 22px;
+	min-width: 44%;
+	height: 22px;
+	padding: 5px 9px;
+	border: 1px solid black;
+	border-radius: 3px;
+}
+
+.content .form-group input:focus {
+	box-shadow: 0 0 2px #A97AAD inset;
+	background-color: #fff;
+	border: 1px solid #A878AF;
+	outline: 0;
 }
 
 .content .form-group {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
 }
 
 .content .row {
-    margin-top: 10px;
+	margin-top: 15px;
 }
 
 .content .btn-group {
-    text-align: center;
-    padding: 4px 8px;
+	text-align: center;
+}
+
+.content .btn-group button {
+	padding: 4px 10px;
+	color: #73879C;
 }

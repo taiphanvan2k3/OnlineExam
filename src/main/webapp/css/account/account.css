@@ -20,8 +20,8 @@
 }
 
 .row select {
-    height: 22px;
-    width: 30%;
+    height: 31px;
+    width: calc(30% + 8px);
 }
 
 .btn-group button {

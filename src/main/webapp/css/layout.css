@@ -1,40 +1,64 @@
 .container {
-    display: flex;
+	display: flex;
 }
 
 .container .side-bar {
-    width: 230px;
-    height: 100vh;
-    background: #2A3F54;
-    color: #E7E7E7;
+	width: 240px;
+	min-height: 100vh;
+	background: #2A3F54;
+	color: #E7E7E7;
 }
 
 .container .top-side-bar {
-    background: #203040;
-    padding: 15px;
+	background: #203040;
+	padding: 15px;
 }
 
 .container .top-side-bar p {
-    margin: 0;
-    color: white;
-    font-size: 24px;
-}
-
-.container .div-info p {
-	text-align: center;
+	margin: 0;
+	color: white;
+	font-size: 21px;
 }
 
 .container .side-bar .sub-menu {
 	display: inline-block;
-    height: 20px;
-    overflow: hidden;
+	height: 20px;
+	overflow: hidden;
 }
 
-.side-bar li{
+.top-side-bar, .side-bar .div-info {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+}
+
+.side-bar .div-info .hello {
+	font-size: 14px;
+	line-height: 22px;
+	color: #BAB8B8;
+}
+
+.side-bar .favicon {
+	width: 29px;
+	height: 29px;
+}
+
+.side-bar .user-icon {
+	margin-left: 12px;
+	width: 50px;
+	height: 50px;
+}
+
+.side-bar li {
 	width: 100%;
-	padding-left: 14px;	
+	padding-left: 14px;
 }
 
-.side-bar li:hover{
-	background: rgba(255,255,255,.06);
+.side-bar li a {
+	width: 100%;
+	display: inline-block;
+}
+
+.side-bar li:hover {
+	background: rgba(255, 255, 255, .06);
 }

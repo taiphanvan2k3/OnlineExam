@@ -8,7 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tạo môn học - Trắc nghiệm online</title>
+<link rel="shortcut icon" type="image/x-icon" href="./assets/favicon.jpg">
+<title>Tạo bài kiểm tra - Trắc nghiệm online</title>
 <link rel="stylesheet" href="./css/common.css" />
 <link rel="stylesheet" href="./css/layout.css" />
 <link rel="stylesheet" href="./css/subject/create.css" />
