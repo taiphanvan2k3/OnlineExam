@@ -13,7 +13,6 @@ import model.BEAN.Exam;
 import model.BEAN.Question;
 import model.BEAN.ResponseInfo;
 import model.BEAN.Result;
-import model.BEAN.Subject;
 import model.BO.ExamBO;
 import model.BO.SubjectBO;
 import util.Utils;
@@ -35,8 +34,7 @@ public class ExamController extends HttpServlet {
 		String destination = "";
 		switch (action) {
 		case "create-question":
-			ArrayList<Subject> subjects = (new SubjectBO()).getAllSubjects();
-			request.getSession().setAttribute("subjects", subjects);
+			request.getSession().setAttribute("subjects", (new SubjectBO()).getAllSubjects());
 			destination = "/create-question.jsp";
 			break;
 		case "create-exam":
@@ -47,7 +45,7 @@ public class ExamController extends HttpServlet {
 			destination = "/do-exam.jsp";
 			break;
 		case "view-history-gv":
-			String teacherId = (String)request.getSession().getAttribute("username");
+			String teacherId = (String) request.getSession().getAttribute("username");
 			ArrayList<Exam> baiKiemTras = (new ExamBO()).getListBaiKiemTraByTeacherId(teacherId);
 			ArrayList<Result> examDetails1 = new ArrayList<Result>();
 			request.getSession().setAttribute("baiKiemTras", baiKiemTras);
