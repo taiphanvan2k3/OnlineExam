@@ -37,12 +37,15 @@ if (username == null || role == null) {
       <%
       } else if (role.equals("gv")) {
       %>
-      <li><a href="./ExamController?action=create-question">Tạo
-          câu hỏi</a></li>
-      <li><a href="./ExamController?action=create-exam">Tạo
-          bài kiểm tra</a></li>
-      <li><a href="./ExamController?action=view-history">Danh
-          sách bài kiểm tra đã tạo</a></li>
+      <li>
+        <a href="./ExamController?action=create-question">Tạo câu hỏi</a>
+      </li>
+      <li>
+        <a href="./ExamController?action=create-exam">Tạo bài kiểm tra</a>
+      </li>
+      <li>
+        <a href="./ExamController?action=view-history-gv">Danh sách bài kiểm tra đã tạo</a>
+      </li>
       <%
       } else if (role.equals("admin")) {
       %>
