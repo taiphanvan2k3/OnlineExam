@@ -5,10 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import model.BEAN.Exam;
 import model.BEAN.Question;
 import model.BEAN.ResponseInfo;
+import model.BEAN.Result;
 import util.Utils;
 
 public class ExamDAO {
@@ -106,5 +109,51 @@ public class ExamDAO {
 			pst.setInt(2, rs.getInt("id"));
 			pst.executeUpdate();
 		}
+	}
+	
+	public ArrayList<Exam> getListBaiKiemTraByTeacherId(String teacherId) {
+		ArrayList<Exam> baiKiemTras = new ArrayList<>();
+		try {
+			Connection connection = Utils.getConnection();
+			if (connection != null) {
+				String query = "select * from baikiemtra where createdBy = '" + teacherId + "'";
+				try {
+					Statement st = connection.createStatement();
+					ResultSet rs = st.executeQuery(query);
+					while (rs.next()) {
+						baiKiemTras.add(new Exam(rs.getString("id"), rs.getString("maMH"), rs.getString("name"),
+								Integer.parseInt(rs.getString("numberQuestion")),
+								Double.parseDouble(rs.getString("totalTime")), rs.getString("password"),
+							 	Timestamp.valueOf(rs.getString("openAt")), rs.getString("createdBy")));
+					}
+				} catch (Exception e) { }
+			}
+		} catch (Exception e) { }
+		return baiKiemTras;
+	}
+	
+	public ArrayList<Result> getListResultExamByExamId(String examId) {
+		ArrayList<Result> results = new ArrayList<>();
+		try {
+			Connection connection = Utils.getConnection();
+			if (connection != null) {
+				String query = "select studentId, CONCAT(u.lastName, ' ', u.firstName) AS fullname, correctQuestions, b.numberQuestion, b.name as examName "
+						+ "from ketqua k "
+						+ "join users u on k.studentId = u.username "
+						+ "join baikiemtra b on k.examId = b.id "
+						+ "where k.examId = '" + examId + "'";
+				try {
+					Statement st = connection.createStatement();
+					ResultSet rs = st.executeQuery(query);
+					while (rs.next()) {
+						results.add(new Result(rs.getString("studentId"), rs.getString("fullname"),
+								Integer.parseInt(rs.getString("correctQuestions")),
+								Integer.parseInt(rs.getString("numberQuestion")),
+								rs.getString("examName")));
+					}
+				} catch (Exception e) { }
+			}
+		} catch (Exception e) { }
+		return results;
 	}
 }

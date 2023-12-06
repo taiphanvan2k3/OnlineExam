@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.BEAN.Exam;
 import model.BEAN.Question;
 import model.BEAN.ResponseInfo;
+import model.BEAN.Result;
 import model.BEAN.Subject;
 import model.BO.ExamBO;
 import model.BO.SubjectBO;
@@ -44,6 +45,21 @@ public class ExamController extends HttpServlet {
 			break;
 		case "do-exam":
 			destination = "/do-exam.jsp";
+			break;
+		case "view-history-gv":
+			String teacherId = (String)request.getSession().getAttribute("username");
+			ArrayList<Exam> baiKiemTras = (new ExamBO()).getListBaiKiemTraByTeacherId(teacherId);
+			ArrayList<Result> examDetails1 = new ArrayList<Result>();
+			request.getSession().setAttribute("baiKiemTras", baiKiemTras);
+			request.getSession().setAttribute("examDetails", examDetails1);
+			destination = "/view-result-teacher.jsp";
+			break;
+		case "view-exam-detail":
+			String examId = request.getParameter("id");
+			System.out.println(examId);
+			ArrayList<Result> examDetails = (new ExamBO()).getListResultExamByExamId(examId);
+			request.getSession().setAttribute("examDetails", examDetails);
+			destination = "/view-result-teacher.jsp";
 			break;
 		}
 		Utils.redirectToPage(request, response, destination);

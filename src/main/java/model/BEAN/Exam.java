@@ -3,6 +3,7 @@ package model.BEAN;
 import java.sql.Timestamp;
 
 public class Exam {
+	private String examId;
 	private String subjectId;
 	private String name;
 	private int numberOfQuestions;
@@ -19,6 +20,26 @@ public class Exam {
 		this.password = "";
 		this.numberOfQuestions = 1;
 		this.totalTime = 1;
+	}
+
+	public Exam(String examId, String subjectId, String name, int numberOfQuestions, double totalTime, String password,
+			Timestamp openAt, String createBy) {
+		this.examId = examId;
+		this.subjectId = subjectId;
+		this.name = name;
+		this.numberOfQuestions = numberOfQuestions;
+		this.totalTime = totalTime;
+		this.password = password;
+		this.openAt = openAt;
+		this.createBy = createBy;
+	}
+	
+	public String getExamId() {
+		return examId;
+	}
+
+	public void setExamId(String examId) {
+		this.examId = examId;
 	}
 
 	public String getSubjectId() {
