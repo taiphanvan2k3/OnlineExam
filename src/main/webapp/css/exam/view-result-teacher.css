@@ -1,67 +1,70 @@
-@charset "UTF-8";
-
 .text-center {
-    text-align: center !important;
+	text-align: center !important;
 }
 
 .table-container {
-    max-height: 90vh;
-    overflow: auto;
-    margin: 25px auto;
+	max-height: 90vh;
+	overflow: auto;
+	margin: 25px auto;
 }
 
 .scrollbar {
-    overflow-y: scroll;
-    scrollbar-width: thin;
-    scrollbar-color: rgb(192, 192, 192) #f3f3f3;
+	overflow-y: auto;
+	scrollbar-width: thin;
+	scrollbar-color: rgb(192, 192, 192) #f3f3f3;
 }
 
 .scrollbar::-webkit-scrollbar {
-    width: 12px;
+	width: 12px;
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
-    background-color: rgb(192, 192, 192);
-    border-radius: 10px;
-    border: 3px solid #f3f3f3;
+	background-color: rgb(192, 192, 192);
+	border-radius: 10px;
+	border: 3px solid #f3f3f3;
 }
 
 .scrollbar::-webkit-scrollbar-track {
-    background-color: #f3f3f3;
+	background-color: #f3f3f3;
 }
 
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.4);
+	display: block;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0, 0, 0);
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal .table-container {
+	overflow: initial;
 }
 
 .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 50%;
-    border-radius: 10px;
+	background-color: #fefefe;
+	margin: 100px auto 0;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 50%;
+	border-radius: 10px;
+	max-height: 70vh;
+	overflow: auto;
 }
 
 .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+.close:hover, .close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
 }

@@ -11,6 +11,7 @@ public class Exam {
 	private String password;
 	private Timestamp openAt;
 	private String createBy;
+	private String subjectName;
 
 	public Exam() {
 		this.subjectId = "";
@@ -33,7 +34,7 @@ public class Exam {
 		this.openAt = openAt;
 		this.createBy = createBy;
 	}
-	
+
 	public String getExamId() {
 		return examId;
 	}
@@ -98,4 +99,11 @@ public class Exam {
 		this.createBy = createBy;
 	}
 
+	public String getSubjectName() {
+		return subjectName;
+	}
+
+	public void setSubjectName(String subjectName) {
+		this.subjectName = subjectName;
+	}
 }
