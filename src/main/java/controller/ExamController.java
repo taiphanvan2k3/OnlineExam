@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import model.BEAN.Exam;
 import model.BEAN.Question;
 import model.BEAN.ResponseInfo;
-import model.BEAN.Result;
 import model.BO.ExamBO;
 import model.BO.SubjectBO;
 import util.Utils;
@@ -46,17 +44,13 @@ public class ExamController extends HttpServlet {
 			break;
 		case "view-history-gv":
 			String teacherId = (String) request.getSession().getAttribute("username");
-			ArrayList<Exam> baiKiemTras = (new ExamBO()).getListBaiKiemTraByTeacherId(teacherId);
-			ArrayList<Result> examDetails1 = new ArrayList<Result>();
-			request.getSession().setAttribute("baiKiemTras", baiKiemTras);
-			request.getSession().setAttribute("examDetails", examDetails1);
+			request.getSession().setAttribute("baiKiemTras", (new ExamBO()).getListBaiKiemTraByTeacherId(teacherId));
 			destination = "/view-result-teacher.jsp";
 			break;
 		case "view-exam-detail":
 			String examId = request.getParameter("id");
-			System.out.println(examId);
-			ArrayList<Result> examDetails = (new ExamBO()).getListResultExamByExamId(examId);
-			request.getSession().setAttribute("examDetails", examDetails);
+			request.getSession().setAttribute("examDetails", (new ExamBO()).getListResultExamByExamId(examId));
+			request.getSession().setAttribute("isClicked", true);
 			destination = "/view-result-teacher.jsp";
 			break;
 		}
