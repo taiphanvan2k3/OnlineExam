@@ -32,8 +32,12 @@ if (username == null || role == null) {
       <%
       if (role.equals("sv")) {
       %>
-      <li><a href="./ExamController?action=do-exam">Làm bài kiểm tra</a></li>
-      <li><a href="./StudentExamController?action=view-history">Lịch sử làm bài</a></li>
+      <li>
+        <a href="./ExamController?action=do-exam">Làm bài kiểm tra</a>
+      </li>
+      <li>
+        <a href="./StudentExamController?action=view-history">Lịch sử làm bài</a>
+      </li>
       <%
       } else if (role.equals("gv")) {
       %>

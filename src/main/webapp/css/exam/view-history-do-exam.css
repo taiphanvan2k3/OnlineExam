@@ -1,0 +1,35 @@
+.main-content {
+	background: #f9f9f9;
+}
+
+.search-block {
+	margin-bottom: 10px;
+}
+
+.search-block, .content-block {
+	border: 1px solid #E6E9ED;
+	padding: 17px;
+	background: #fff;
+}
+
+.main-content .title {
+	margin-top: 0;
+	font-size: 18px;
+    font-weight: 400;
+}
+
+.btn-search {
+	background: #337ab7;
+	margin-top: 10px;
+	display: block;
+	padding: 6px 12px;
+	border: 1px solid #337ab7;
+	font-size: 14px;
+    font-weight: 400;
+    color: white;
+}
+
+.div-pagination button {
+	border: none;
+	background: inherit;
+}
