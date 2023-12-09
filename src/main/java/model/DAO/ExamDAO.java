@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
+import java.sql.Timestamp;
 
 import model.BEAN.Exam;
 import model.BEAN.Question;
@@ -109,6 +111,117 @@ public class ExamDAO {
 			pst.setInt(2, rs.getInt("id"));
 			pst.executeUpdate();
 		}
+	}
+
+	public ArrayList<Exam> getValidExams(String username) {
+		ArrayList<Exam> exams = new ArrayList<>();
+		try {
+			Connection connection = Utils.getConnection();
+			if (connection != null) {
+				String sql = "SELECT baikiemtra.*, users.firstName, users.lastName FROM baikiemtra JOIN users ON baikiemtra.createdBy = users.username WHERE openAt > NOW() AND NOT EXISTS (SELECT * FROM ketqua kq WHERE baikiemtra.id = kq.examId AND kq.studentId = ?)";
+				try {
+					PreparedStatement pst = connection.prepareStatement(sql);
+					pst.setString(1, username);
+					ResultSet rs = pst.executeQuery();
+					while (rs.next()) {
+						exams.add(new Exam(rs.getString("id"), rs.getString("maMH"), rs.getString("name"),
+								rs.getInt("numberQuestion"), rs.getDouble("totalTime"), rs.getString("password"),
+								rs.getTimestamp("openAt"), rs.getString("lastName") + " " + rs.getString("firstName")));
+					}
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+		} catch (Exception e) {
+		}
+		return exams;
+	}
+
+	public boolean checkPasswordExam(String examId, String password) {
+		try {
+			Connection connection = Utils.getConnection();
+			String sql = "SELECT * FROM baikiemtra WHERE id = ? AND password = ?";
+			PreparedStatement pst = connection.prepareStatement(sql);
+			pst.setString(1, examId);
+			pst.setString(2, password);
+			ResultSet rs = pst.executeQuery();
+			if (rs.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return false;
+	}
+
+	public ArrayList<Question> getListQuestionsByExamId(String examId) {
+		ArrayList<Question> questions = new ArrayList<>();
+		try {
+			Connection connection = Utils.getConnection();
+			String sql = "SELECT ch.* FROM baikiemtra_cauhoi bc " + "INNER JOIN cauhoi ch ON bc.maCauHoi = ch.id "
+					+ "WHERE bc.maBaiKiemTra = ?";
+			PreparedStatement pst = connection.prepareStatement(sql);
+			pst.setInt(1, Integer.parseInt(examId));
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				String[] correctAnswerIds = rs.getString("correctAnswerIds").split(",\s");
+				String type = rs.getBoolean("isSingle") ? "single" : "multiple";
+				questions.add(new Question(rs.getInt("id"), rs.getString("subjectId"), rs.getString("question"),
+						new String[] { rs.getString("answer1"), rs.getString("answer2"), rs.getString("answer3"),
+								rs.getString("answer4") },
+						type, correctAnswerIds));
+			}
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return questions;
+	}
+
+	public double getFinalScore(Map<String, String[]> selectedAnswersMap, String examId) {
+		double finalScore = 0;
+		try {
+			double totalScore = 0;
+			int numberQuestion = 0;
+			Connection connection = Utils.getConnection();
+			String sql = "SELECT bkt.numberQuestion, ch.* FROM baikiemtra_cauhoi bc "
+					+ "INNER JOIN cauhoi ch ON bc.maCauHoi = ch.id "
+					+ "INNER JOIN baikiemtra bkt ON bc.maBaiKiemTra = bkt.id " + "WHERE bc.maBaiKiemTra = ?";
+			PreparedStatement pst = connection.prepareStatement(sql);
+			pst.setInt(1, Integer.parseInt(examId));
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				String idCauHoi = Integer.toString(rs.getInt("id"));
+				String[] myAnswers = selectedAnswersMap.get(idCauHoi);
+				if (myAnswers == null) {
+					continue;
+				}
+				boolean isSingle = rs.getBoolean("isSingle");
+				numberQuestion = rs.getInt("numberQuestion");
+				String[] correctAnswerIds = rs.getString("correctAnswerIds").split(", ");
+				double ammountTrueAnswer = countCommonElements(correctAnswerIds, myAnswers);
+				if (isSingle) {
+					totalScore += ammountTrueAnswer;
+				} else {
+					totalScore += ammountTrueAnswer < myAnswers.length
+							? Math.max(2 * ammountTrueAnswer - myAnswers.length, 0) / correctAnswerIds.length
+							: ammountTrueAnswer / correctAnswerIds.length;
+				}
+			}
+			finalScore = totalScore * 10 / numberQuestion;
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return finalScore;
+	}
+
+	private int countCommonElements(String[] array1, String[] array2) {
+		int count = 0;
+		for (String element : array1) {
+			if (Arrays.asList(array2).contains(element)) {
+				count++;
+			}
+		}
+		return count;
 	}
 
 	public ArrayList<Exam> getListBaiKiemTraByTeacherId(String teacherId) {

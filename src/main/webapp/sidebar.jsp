@@ -33,7 +33,7 @@ if (username == null || role == null) {
       if (role.equals("sv")) {
       %>
       <li>
-        <a href="./ExamController?action=do-exam">Làm bài kiểm tra</a>
+        <a href="./ExamController?action=exams">Làm bài kiểm tra</a>
       </li>
       <li>
         <a href="./StudentExamController?action=view-history">Lịch sử làm bài</a>

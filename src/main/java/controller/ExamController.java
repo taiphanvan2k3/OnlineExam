@@ -1,12 +1,18 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.BEAN.Exam;
 import model.BEAN.Question;
@@ -40,7 +46,41 @@ public class ExamController extends HttpServlet {
 			destination = "/create-exam.jsp";
 			break;
 		case "do-exam":
-			destination = "/do-exam.jsp";
+			String examId = (String) request.getParameter("exam-id");
+			request.getSession().setAttribute("examId", examId);
+			String timeout = (String) request.getParameter("exam-timeout");
+			request.getSession().setAttribute("examTimeout", timeout);
+			String password = (String) request.getParameter("password");
+//			Timestamp openAt = (Timestamp) request.getParameter("exam-openAt");
+			if ((new ExamBO()).checkPasswordExam(examId, password)) {
+				request.getSession().setAttribute("examQuestion", (new ExamBO()).getListQuestionsByExamId(examId));
+				destination = "/do-exam.jsp";
+			} else {
+				request.getSession().setAttribute("isWrongPassword", "true");
+				destination = "/exams.jsp";
+			}
+			break;
+		case "exams":
+			String username = (String) request.getSession().getAttribute("username");
+			ArrayList<Exam> exams = (new ExamBO()).getValidExams(username);
+			request.getSession().setAttribute("exams", exams);
+			destination = "/exams.jsp";
+			break;
+		case "send-result":
+			String selectedAnswers = request.getParameter("selectedAnswers");
+			if (selectedAnswers == "") {
+				request.getSession().setAttribute("finalScore", "0");
+				destination = "/exams.jsp";
+				break;
+			}
+			ObjectMapper mapper = new ObjectMapper();
+			Map<String, String[]> selectedAnswersMap = mapper.readValue(selectedAnswers,
+					new TypeReference<Map<String, String[]>>() {
+					});
+			examId = (String) request.getSession().getAttribute("examId");
+			double finalScore = (new ExamBO()).getFinalScore(selectedAnswersMap, examId);
+			request.getSession().setAttribute("finalScore", finalScore);
+			destination = "/exams.jsp";
 			break;
 		case "view-history-gv":
 			String teacherId = (String) request.getSession().getAttribute("username");
@@ -48,7 +88,7 @@ public class ExamController extends HttpServlet {
 			destination = "/view-result-teacher.jsp";
 			break;
 		case "view-exam-detail":
-			String examId = request.getParameter("id");
+			examId = request.getParameter("id");
 			request.getSession().setAttribute("examDetails", (new ExamBO()).getListResultExamByExamId(examId));
 			request.getSession().setAttribute("isClicked", true);
 			destination = "/view-result-teacher.jsp";
@@ -68,6 +108,10 @@ public class ExamController extends HttpServlet {
 			this.createExam(request, response);
 			break;
 		case "do-exam":
+			break;
+		case "exams":
+			break;
+		case "send-result":
 			break;
 		}
 		doGet(request, response);
