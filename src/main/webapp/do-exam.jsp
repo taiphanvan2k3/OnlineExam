@@ -12,17 +12,16 @@
 <title>Làm bài trắc nghiệm online</title>
 <link rel="stylesheet" href="./css/common.css" />
 <link rel="stylesheet" href="./css/layout.css" />
+<link rel="stylesheet" href="./css/exam/do-exam.css" />
 </head>
 <body>
 	<div class="container">
-		<%@include file="sidebar.jsp"%>
 		<%
 		ArrayList<Question> examQuestion = (ArrayList<Question>) request.getSession().getAttribute("examQuestion");
 		int index = 1;
 		%>
-		<p id="timeout" style="height: 70px; font-size: 50px;"><%= request.getSession().getAttribute("examTimeout") %></p>
-		<div class="main-content" style="height: 90vh; overflow-y: auto;">
-			<div class="custom-scroll">
+		<div class="main-content display-timeout" style="height: 90vh; overflow-y: auto;">
+			<div class="custom-scroll list-question">
 				<form action="./ExamController" method="post">
 					<input type="hidden" name="action" value="send-result"> 
 					<input type="hidden" name="timeExam" 
@@ -32,28 +31,39 @@
 					<%
 					for (Question question : examQuestion) {
 					%>
-					<h3 style="margin-bottom: 10px;"><%=index + ") " + question.getQuestion()%></h3>
-					<% for (int i = 0; i < question.getAnswers().length; i++) { %>
-					<%if (question.getType().equals("multiple")) { %>
-					<input type="checkbox" name="answer<%= index%>" value="<%= String.valueOf((char) (65 + i)) %>" onclick="updateSelectedAnswers('<%= question.getId() %>', '<%= String.valueOf((char) (65 + i)) %>', 'checkbox')">
-					<label for="option<%= i %>"><%= String.valueOf((char) (65 + i)) + ") " + question.getAnswers()[i] %></label><br>
-					<%} else { %>
-					<input type="radio" name="answer<%= index%>" value="<%= String.valueOf((char) (65 + i)) %>" onclick="updateSelectedAnswers('<%= question.getId() %>', '<%= String.valueOf((char) (65 + i)) %>', 'radio')">
-					<label for="option<%= i %>"><%= String.valueOf((char) (65 + i)) + ") " + question.getAnswers()[i] %></label><br>
-					<%} %>
-					<% } %>
+						<h3 style="margin-bottom: 10px;">Câu <%=index + "/" + examQuestion.size() + ": " + question.getQuestion()%></h3>
+						<% for (int i = 0; i < question.getAnswers().length; i++) { %>
+							<%if (question.getType().equals("multiple")) { %>
+								<div id="checkbox<%= index%><%= String.valueOf((char) (65 + i)) %>" class="question">									
+									<input id="checkbox<%= index%><%= String.valueOf((char) (65 + i)) %>" type="checkbox" name="answer<%= index%>" value="<%= String.valueOf((char) (65 + i)) %>" onclick="updateSelectedAnswers('<%= question.getId() %>', '<%= String.valueOf((char) (65 + i)) %>', 'checkbox', this.id, '')">
+									<label for="option<%= i %>"><%= String.valueOf((char) (65 + i)) + ") " + question.getAnswers()[i] %></label><br>
+								</div>
+							<%} else { %>
+								<div class="question radio<%= index%>">
+									<input id="radio<%= index%><%= String.valueOf((char) (65 + i)) %>" type="radio" name="answer<%= index%>" value="<%= String.valueOf((char) (65 + i)) %>" onclick="updateSelectedAnswers('<%= question.getId() %>', '<%= String.valueOf((char) (65 + i)) %>', 'radio', this.id, 'radio<%= index%>')">
+									<label for="option<%= i %>"><%= String.valueOf((char) (65 + i)) + ") " + question.getAnswers()[i] %></label><br>
+								</div>
+							<%} %>
+						<% } %>
 					<%
-					index++;
+						index++;
 					}
 					%>
 					<input type="hidden" name="selectedAnswers" id="selected-answers">
-					<button type="submit" style="transform: translate(calc(50vw - 230px), 50px)">Nộp bài</button>
+					<button type="submit" class="btn-submit">Nộp bài</button>
 				</form>
+			</div>
+			<div class="timeout-container">		
+				<p class="title-timeout">Thời gian còn lại</p>
+				<p id="timeout"><%= request.getSession().getAttribute("examTimeout") %></p>
 			</div>
 		</div>
 	</div>
 	<script>
-		      const startingMinutes = parseInt('<%= request.getSession().getAttribute("examTimeout") %>');
+		document.addEventListener('keydown', function(event) {
+		     event.preventDefault();
+		});
+		const startingMinutes = parseInt('<%= request.getSession().getAttribute("examTimeout") %>');
 		let time = startingMinutes * 60;
 		const timeoutElement = document.getElementById('timeout');
 		const timeDoExamElement = document.getElementById('examTimeout');
@@ -70,7 +80,7 @@
 			time--;
 		}
 		var selectedAnswers = {};
-		function updateSelectedAnswers(questionId, answerValue, type) {
+		function updateSelectedAnswers(questionId, answerValue, type, id, className) {
 			if (!selectedAnswers.hasOwnProperty(questionId)) {
 				selectedAnswers[questionId] = [];
 			}
@@ -81,8 +91,21 @@
 				} else {
 					selectedAnswers[questionId].push(answerValue);
 				}
+				const divElement = document.getElementById(id);
+				if (divElement.classList.contains("choose")) {
+					divElement.classList.remove("choose");
+				}
+				else {
+					divElement.classList.add("choose");
+				}
 			} else {
 				selectedAnswers[questionId] = [answerValue];
+				const divElements = document.getElementsByClassName(className);
+				Array.from(divElements).forEach(function(element) {
+					element.classList.remove('choose');
+				});
+				const divElement = document.getElementById(id).closest("div");
+				divElement.classList.add("choose");
 			}
 			const answers = document.getElementById('selected-answers');
 			answers.value = JSON.stringify(selectedAnswers);
