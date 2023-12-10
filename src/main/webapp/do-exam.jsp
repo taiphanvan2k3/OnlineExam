@@ -64,6 +64,9 @@
 			let seconds = time % 60;
 			timeoutElement.innerHTML = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
 			timeDoExamElement.value = timeoutElement.innerHTML;
+			if (time <= 0) {
+		        document.forms[0].submit();
+		    }
 			time--;
 		}
 		var selectedAnswers = {};
