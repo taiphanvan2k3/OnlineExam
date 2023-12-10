@@ -12,19 +12,21 @@ public class Exam {
 	private Timestamp openAt;
 	private String createBy;
 	private String subjectName;
+	private String teacherName;
 
 	public Exam() {
+		this.examId = "";
 		this.subjectId = "";
 		this.name = "";
 		this.name = "";
-		this.createBy = "";
+		this.setCreateBy("");
 		this.password = "";
 		this.numberOfQuestions = 1;
 		this.totalTime = 1;
 	}
 
 	public Exam(String examId, String subjectId, String name, int numberOfQuestions, double totalTime, String password,
-			Timestamp openAt, String createBy) {
+			Timestamp openAt, String teacherName) {
 		this.examId = examId;
 		this.subjectId = subjectId;
 		this.name = name;
@@ -32,7 +34,7 @@ public class Exam {
 		this.totalTime = totalTime;
 		this.password = password;
 		this.openAt = openAt;
-		this.createBy = createBy;
+		this.teacherName = teacherName;
 	}
 
 	public String getExamId() {
@@ -91,6 +93,14 @@ public class Exam {
 		this.openAt = openAt;
 	}
 
+	public String getSubjectName() {
+		return subjectName;
+	}
+
+	public void setSubjectName(String subjectName) {
+		this.subjectName = subjectName;
+	}
+
 	public String getCreateBy() {
 		return createBy;
 	}
@@ -99,11 +109,11 @@ public class Exam {
 		this.createBy = createBy;
 	}
 
-	public String getSubjectName() {
-		return subjectName;
+	public String getTeacherName() {
+		return teacherName;
 	}
 
-	public void setSubjectName(String subjectName) {
-		this.subjectName = subjectName;
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
 	}
 }

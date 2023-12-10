@@ -1,6 +1,7 @@
 package model.BEAN;
 
 public class Question {
+	private int id;
 	private String subjectId;
 	private String question;
 	private String[] answers;
@@ -8,6 +9,17 @@ public class Question {
 	private String answerSingle;
 	private String[] answerMultiple;
 
+	public Question() {}
+	
+	public Question(int id, String subjectId, String question, String[] answers, String type, String[] answerMultiple) {
+		this.id = id;
+		this.subjectId = subjectId;
+		this.question = question;
+		this.answers = answers;
+		this.type = type;
+		this.answerMultiple = answerMultiple;
+	}
+	
 	public String getSubjectId() {
 		return subjectId;
 	}
@@ -54,6 +66,14 @@ public class Question {
 
 	public void setAnswerMultiple(String[] answerMultiple) {
 		this.answerMultiple = answerMultiple;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }
