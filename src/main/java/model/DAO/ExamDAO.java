@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import model.BEAN.Exam;
 import model.BEAN.Question;
@@ -273,5 +274,27 @@ public class ExamDAO {
 		} catch (Exception e) {
 		}
 		return results;
+	}
+
+	public void saveResultExam(String studentId, String examId, Double correctQuestions,
+			LocalDateTime openAt, LocalDateTime submitAt) {
+		ArrayList<Result> results = new ArrayList<>();
+		try {
+			Connection connection = Utils.getConnection();
+			PreparedStatement preparedStatement = null;
+			if (connection != null) {
+				String query = "INSERT INTO ketqua (studentId, examId, correctQuestions, openAt, submitAt) VALUES (?, ?, ?, ?, ?)";
+
+				preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setString(1, studentId);
+				preparedStatement.setInt(2, Integer.parseInt(examId));
+				preparedStatement.setDouble(3, correctQuestions);
+				preparedStatement.setObject(4, openAt);
+				preparedStatement.setObject(5, submitAt);
+
+				preparedStatement.executeUpdate();
+			}
+		} catch (Exception e) {
+		}
 	}
 }

@@ -1,5 +1,6 @@
 package model.BO;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -42,5 +43,10 @@ public class ExamBO {
 	
 	public ArrayList<Result> getListResultExamByExamId(String examId) {
 		return (new ExamDAO()).getListResultExamByExamId(examId);
+	}
+	
+	public void saveResultExam(String studentId, String examId, Double correctQuestions,
+			LocalDateTime openAt, LocalDateTime submitAt) {
+		(new ExamDAO()).saveResultExam(studentId, examId, correctQuestions, openAt, submitAt);
 	}
 }

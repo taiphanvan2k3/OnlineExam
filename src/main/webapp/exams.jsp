@@ -19,18 +19,23 @@
 		<%@include file="sidebar.jsp"%>
 		<%
 		ArrayList<Exam> exams = (ArrayList<Exam>) request.getSession().getAttribute("exams");
+		Double finalScore = (Double) request.getSession().getAttribute("finalScore");
+		String timeSubmit = (String) request.getSession().getAttribute("timeSubmit");
+		String timeStartExam = (String) request.getSession().getAttribute("timeStartExam");
 		%>
 		<div class="main-content">
-			<table class="table table-dark table-hover">
-				<tr>
-					<th>Mã môn học</th>
-					<th>Tên môn học</th>
-					<th>Số câu hỏi</th>
-					<th>Số phút</th>
-					<th>Giờ bắt đầu</th>
-					<th>Giảng viên</th>
-					<th>Kiểm tra</th>
-				</tr>
+			<table class="styled-table">
+				<thead class="thead-dark">
+					<tr>
+						<th>Mã môn học</th>
+						<th>Tên môn học</th>
+						<th>Số câu hỏi</th>
+						<th>Số phút</th>
+						<th>Giờ bắt đầu</th>
+						<th>Giảng viên</th>
+						<th>Kiểm tra</th>
+					</tr>
+				</thead>
 				<%
 				for (Exam exam : exams) {
 				%>
@@ -70,12 +75,42 @@
 			</div>
 		</div>
 	</form>
+	<%
+	if (finalScore != null) {
+	%>
+	<div id="myModal" class="modal">
+		<div class="modal-content scrollbar">
+			<span class="close">&times;</span>
+			<h2 class="text-center">Kết quả thi</h2>
+			<div class="table-container">
+				<table class="styled-table">
+					<thead class="thead-dark">
+						<tr>
+							<th class="text-center">Điểm</th>
+							<th class="text-center">Thời gian làm bài</th>
+							<th class="text-center">Thời gian nộp bài</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="active-row">
+							<td class="text-center"><%=finalScore%></td>
+							<td class="text-center"><%=timeSubmit%></td>
+							<td class="text-center"><%=timeStartExam%></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<%
+	}
+	%>
 	<script>
 	        const dialog = document.getElementById('my-dialog');
-	        const finalScore = <%=request.getSession().getAttribute("finalScore")%>;
+	        const finalScore = <%=finalScore%>;
 	        const isWrongPassword = '<%=request.getSession().getAttribute("isWrongPassword")%>';
 	        if (finalScore !== null && finalScore !== "" && finalScore !== undefined) {
-	        	alert(`Bạn được ${finalScore} điểm`);
+	        	//alert(`Bạn được ${finalScore} điểm`);
 	        	<%request.getSession().removeAttribute("finalScore");%>
 	        }
 	        else if (isWrongPassword === "true") {
@@ -97,5 +132,6 @@
 		        });
 		    });
 		</script>
+	<script src="./js/view-history-create-exam.js"></script>
 </body>
 </html>

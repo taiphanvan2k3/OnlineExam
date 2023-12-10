@@ -15,8 +15,7 @@ public class Utils {
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			String url="jdbc:mysql://online-exam.mysql.database.azure.com:3306/online-exam?useSSL=true";
-			conn=DriverManager.getConnection(url, "aedt3", "Toilagay123");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/online-exam", "root", "");
 		} catch (Exception e) {
 			System.out.println("Fail");
 		}
