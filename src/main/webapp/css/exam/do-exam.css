@@ -1,10 +1,15 @@
+.main-content {
+	overflow-y: auto;
+	height: calc(93vh + 5px);
+}
+
 .question {
-    background: #d7e4f2;
-    width: 90%;
-    border-radius: 8px;
-    margin: 10px 20px;
-    padding: 5px 10px;
-    word-wrap: break-word;
+	background: #d7e4f2;
+	width: 90%;
+	border-radius: 8px;
+	margin: 10px 20px;
+	padding: 5px 10px;
+	word-wrap: break-word;
 }
 
 .question.choose {
@@ -26,13 +31,13 @@
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
-    position: sticky;
-    top: 0;
-    height: 20%;
-    background-color: rgb(192, 192, 192);
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0.5, 0.7);
+	position: sticky;
+	top: 0;
+	height: 110px;
+	background-color: rgb(192, 192, 192);
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: 0 2px 4px rgba(0, 0, 0.5, 0.7);
 }
 
 #timeout {
@@ -41,19 +46,58 @@
 }
 
 .title-timeout {
-	background-color: #5984d3; 
-	color: white; 
-	font-size: 20px; 
-	margin: 0 auto; 
+	background-color: #5984d3;
+	color: white;
+	font-size: 20px;
+	margin: 0 auto;
 	padding: 10px 2px;
 }
 
 .btn-submit {
-	transform: translate(48vw, 50px); 
-	background-color: #d0d0e2; 
-	padding: 10px; 
-	border-radius: 12px; 
-	border: none; 
-	outline: none; 
+	transform: translate(45vw, 10px);
+	margin-bottom: 20px;
+	background-color: #d0d0e2;
+	padding: 10px;
+	border-radius: 12px;
+	border: none;
+	outline: none;
 	font-size: 20px;
+}
+
+.exam-info {
+	margin-left: 40%;
+	width: 50%;
+	border-radius: 5px;
+	border: 1px solid #c4c4c4;
+}
+
+.exam-info label {
+	font-weight: bold;
+}
+
+.exam-info .exam-info-body {
+	padding: 5px 10px;
+}
+
+.exam-info .exam-name {
+	text-align: center;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	background: #cfcfe1;
+	padding: 5px 10px;
+	font-weight: bold;
+}
+
+.exam-info .row {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 5px;
+}
+
+.exam-info .row div:first-child {
+	width: 60%;
+}
+
+.exam-info .row div:nth-child(2) {
+	flex-grow: 1;
 }
