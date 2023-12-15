@@ -130,6 +130,7 @@
   </div>
   <script>
     var startingMinutes = parseInt('<%=request.getSession().getAttribute("examTimeout")%>');
+    var examId = parseInt('<%=request.getSession().getAttribute("examId")%>');
   </script>
   <script src="./js/do-exam.js"></script>
   <script src="./js/view-history-create-exam.js"></script>

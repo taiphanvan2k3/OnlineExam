@@ -1,15 +1,16 @@
 window.onload = function () {
-	const jsonSelectedAnswers = localStorage.getItem("selectedAnswers");
-	if (jsonSelectedAnswers) {
-		const inputElements = document.querySelectorAll('input[type="checkbox"], input[type="radio"]');
-		inputElements.forEach(function (input) {
-			const selectedAnswersObject = JSON.parse(jsonSelectedAnswers);
-			const isChecked = isCheckedInput(input.value.split(';')[0], input.value.split(';')[1], selectedAnswersObject);
-			input.checked = isChecked;
-			if (isChecked) {
-				input.closest("div").classList.add("choose");
-			}
-		})
+	const localStorageSelectedAnswers = JSON.parse(localStorage.getItem("selectedAnswers"));
+	if (localStorageSelectedAnswers) {
+		if (localStorageSelectedAnswers.examId === examId) {			
+			const inputElements = document.querySelectorAll('input[type="checkbox"], input[type="radio"]');
+			inputElements.forEach(function (input) {
+				const isChecked = isCheckedInput(input.value.split(';')[0], input.value.split(';')[1], localStorageSelectedAnswers.selectedAnswers);
+				input.checked = isChecked;
+				if (isChecked) {
+					input.closest("div").classList.add("choose");
+				}
+			})
+		}
 	}
 }
 
@@ -59,8 +60,9 @@ function updateTimeout() {
 var selectedAnswers = {};
 
 function updateSelectedAnswers(questionId, answerValue, type, id, className) {
-	if (localStorage.getItem("selectedAnswers")) {
-		selectedAnswers = JSON.parse(localStorage.getItem("selectedAnswers"));
+	const localStorageSelectedAnswers = JSON.parse(localStorage.getItem("selectedAnswers"));
+	if (localStorageSelectedAnswers && localStorageSelectedAnswers.examId === examId) {
+		selectedAnswers = JSON.parse(localStorage.getItem("selectedAnswers")).selectedAnswers;
 	}
 	if (!selectedAnswers.hasOwnProperty(questionId)) {
 		selectedAnswers[questionId] = [];
@@ -90,7 +92,7 @@ function updateSelectedAnswers(questionId, answerValue, type, id, className) {
 	}
 	const answers = document.getElementById('selected-answers');
 	answers.value = JSON.stringify(selectedAnswers);
-	localStorage.setItem("selectedAnswers", JSON.stringify(selectedAnswers));
+	localStorage.setItem("selectedAnswers", JSON.stringify({examId, selectedAnswers}));
 }
 
 function triggerInputClick(divElement) {
