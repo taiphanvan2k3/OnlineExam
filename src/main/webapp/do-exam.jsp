@@ -82,12 +82,13 @@
           <div
             id="checkbox<%=index%><%=String.valueOf((char) (65 + i))%>"
             class="question"
+            onclick="triggerInputClick(this)"
           >
             <input
               id="checkbox<%=index%><%=String.valueOf((char) (65 + i))%>"
-              type="checkbox" name="answer<%=index%>"
-              value="<%=String.valueOf((char) (65 + i))%>"
-              onclick="updateSelectedAnswers('<%=question.getId()%>', '<%=String.valueOf((char) (65 + i))%>', 'checkbox', this.id, '')"
+              type="checkbox" name="answer<%=index%>""
+              value="<%=question.getId()%>;<%=String.valueOf((char) (65 + i))%>"
+              onclick="event.stopPropagation(); updateSelectedAnswers('<%=question.getId()%>', '<%=String.valueOf((char) (65 + i))%>', 'checkbox', this.id, '')"
             >
             <label for="option<%=i%>"><%=String.valueOf((char) (65 + i)) + ") " + question.getAnswers()[i]%></label>
             <br>
@@ -95,12 +96,12 @@
           <%
           } else {
           %>
-          <div class="question radio<%=index%>">
+          <div class="question radio<%=index%>" onclick="triggerInputClick(this)">
             <input
               id="radio<%=index%><%=String.valueOf((char) (65 + i))%>"
               type="radio" name="answer<%=index%>"
-              value="<%=String.valueOf((char) (65 + i))%>"
-              onclick="updateSelectedAnswers('<%=question.getId()%>', '<%=String.valueOf((char) (65 + i))%>', 'radio', this.id, 'radio<%=index%>')"
+              value="<%=question.getId()%>;<%=String.valueOf((char) (65 + i))%>"
+              onclick="event.stopPropagation(); updateSelectedAnswers('<%=question.getId()%>', '<%=String.valueOf((char) (65 + i))%>', 'radio', this.id, 'radio<%=index%>')"
             >
             <label for="option<%=i%>"><%=String.valueOf((char) (65 + i)) + ") " + question.getAnswers()[i]%></label>
             <br>
@@ -118,7 +119,7 @@
           <input type="hidden" name="selectedAnswers"
             id="selected-answers"
           >
-          <button type="submit" class="btn-submit">Nộp bài</button>
+          <button type="submit" class="btn-submit" onclick="localStorage.removeItem('selectedAnswers')">Nộp bài</button>
         </form>
       </div>
       <div class="timeout-container">

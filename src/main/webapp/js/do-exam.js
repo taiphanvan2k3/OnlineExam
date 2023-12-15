@@ -1,5 +1,20 @@
+window.onload = function () {
+	const jsonSelectedAnswers = localStorage.getItem("selectedAnswers");
+	if (jsonSelectedAnswers) {
+		const inputElements = document.querySelectorAll('input[type="checkbox"], input[type="radio"]');
+		inputElements.forEach(function (input) {
+			const selectedAnswersObject = JSON.parse(jsonSelectedAnswers);
+			const isChecked = isCheckedInput(input.value.split(';')[0], input.value.split(';')[1], selectedAnswersObject);
+			input.checked = isChecked;
+			if (isChecked) {
+				input.closest("div").classList.add("choose");
+			}
+		})
+	}
+}
+
 // Ngăn chặn sự kiện chuột phải
-document.addEventListener("contextmenu", function(e) {
+document.addEventListener("contextmenu", function (e) {
 	e.preventDefault();
 });
 
@@ -12,16 +27,16 @@ document.addEventListener("click", () => {
 		});
 	}
 
-	document.addEventListener("fullscreenchange", function() {
+	document.addEventListener("fullscreenchange", function () {
 		if (document.fullscreenElement) {
 			document.querySelector('.main-content').style.height = 'calc(93vh + 17px)';
-		}else {
+		} else {
 			document.querySelector('.main-content').style.height = 'calc(93vh + 5px)';
 		}
 	});
 });
 
-document.addEventListener('keydown', function(event) {
+document.addEventListener('keydown', function (event) {
 	event.preventDefault();
 });
 
@@ -40,8 +55,13 @@ function updateTimeout() {
 	}
 	time--;
 }
+
 var selectedAnswers = {};
+
 function updateSelectedAnswers(questionId, answerValue, type, id, className) {
+	if (localStorage.getItem("selectedAnswers")) {
+		selectedAnswers = JSON.parse(localStorage.getItem("selectedAnswers"));
+	}
 	if (!selectedAnswers.hasOwnProperty(questionId)) {
 		selectedAnswers[questionId] = [];
 	}
@@ -62,7 +82,7 @@ function updateSelectedAnswers(questionId, answerValue, type, id, className) {
 	} else {
 		selectedAnswers[questionId] = [answerValue];
 		const divElements = document.getElementsByClassName(className);
-		Array.from(divElements).forEach(function(element) {
+		Array.from(divElements).forEach(function (element) {
 			element.classList.remove('choose');
 		});
 		const divElement = document.getElementById(id).closest("div");
@@ -70,4 +90,19 @@ function updateSelectedAnswers(questionId, answerValue, type, id, className) {
 	}
 	const answers = document.getElementById('selected-answers');
 	answers.value = JSON.stringify(selectedAnswers);
+	localStorage.setItem("selectedAnswers", JSON.stringify(selectedAnswers));
+}
+
+function triggerInputClick(divElement) {
+	const radioInput = divElement.querySelector('input[type="checkbox"], input[type="radio"]');
+	if (radioInput) {
+		radioInput.click();
+	}
+}
+
+function isCheckedInput(questionId, answerValue, selectedAnswersObject) {
+	if (selectedAnswersObject.hasOwnProperty(questionId)) {
+		return selectedAnswersObject[questionId].includes(answerValue);
+	}
+	return false;
 }
