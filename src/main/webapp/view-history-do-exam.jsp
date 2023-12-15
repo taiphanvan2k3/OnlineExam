@@ -10,11 +10,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tạo môn học-Trắc nghiệm online</title>
+<link rel="shortcut icon" type="image/x-icon"
+  href="./assets/favicon.jpg"
+>
 <link rel="stylesheet" href="./css/common.css" />
 <link rel="stylesheet" href="./css/layout.css" />
 <link rel="stylesheet" href="./css/exam/view-history-do-exam.css" />
 </head>
 <body>
+  <%
+  ArrayList<HistoryDoExam> histories = (ArrayList<HistoryDoExam>) request.getSession().getAttribute("histories");
+  String subjectId = request.getParameter("subjectId");
+  if(histories == null) {
+    response.sendRedirect("./StudentExamController?action=view-history&subjectId=" +subjectId); 
+    return;
+  }
+  request.getSession().removeAttribute("histories");
+  %>
   <div class="container">
     <%@include file="sidebar.jsp"%>
     <div class="main-content">
@@ -28,8 +40,6 @@
             <option value="all">Tất cả</option>
             <%
             ArrayList<Subject> subjects = (ArrayList<Subject>) request.getSession().getAttribute("subjects");
-            String subjectId = request.getParameter("subjectId");
-            ArrayList<HistoryDoExam> histories = (ArrayList<HistoryDoExam>) request.getSession().getAttribute("histories");
             int currentPage = Integer.parseInt(request.getParameter("current-page"));
             if (subjects != null) {
             	for (Subject subject : subjects) {
@@ -102,13 +112,11 @@
             <li class="prev">
               <button type="button">Prev</button>
             </li>
-            <li class="current-page">
-              <span>
+            <li class="current-page"><span>
                 <%=currentPage%>
                 /
                 <%=totalPages%>
-              </span>
-            </li>
+              </span></li>
             <li class="next">
               <button type="button">Next</button>
             </li>
@@ -127,7 +135,6 @@
       </div>
     </div>
   </div>
-
   <script src="./js/view-history-do-exam.js"></script>
 </body>
 </html>

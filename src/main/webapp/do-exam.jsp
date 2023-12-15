@@ -23,6 +23,7 @@
   <div class="container">
     <%
     ArrayList<Question> examQuestion = (ArrayList<Question>) request.getSession().getAttribute("examQuestion");
+    double totalTime = Double.parseDouble((String) request.getSession().getAttribute("examTimeout")) * 60;
     int index = 1;
     %>
     <div class="main-content display-timeout">
@@ -119,12 +120,12 @@
           <input type="hidden" name="selectedAnswers"
             id="selected-answers"
           >
-          <button type="submit" class="btn-submit" onclick="localStorage.removeItem('selectedAnswers')">Nộp bài</button>
+          <button type="submit" class="btn-submit" onclick="removeLocalStorage()">Nộp bài</button>
         </form>
       </div>
       <div class="timeout-container">
         <p class="title-timeout">Thời gian còn lại</p>
-        <p id="timeout"><%=request.getSession().getAttribute("examTimeout")%></p>
+        <p id="timeout"><%=String.format("%02d:%02d", Math.round(totalTime) / 60, Math.round(totalTime) % 60)%></p>
       </div>
     </div>
   </div>

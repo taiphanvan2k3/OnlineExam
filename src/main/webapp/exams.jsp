@@ -10,6 +10,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Danh sách bài kiểm tra</title>
+<link rel="shortcut icon" type="image/x-icon"
+  href="./assets/favicon.jpg"
+>
 <link rel="stylesheet" href="./css/common.css" />
 <link rel="stylesheet" href="./css/layout.css" />
 <link rel="stylesheet" href="./css/exam/exams.css" />
@@ -19,6 +22,11 @@
 		<%@include file="sidebar.jsp"%>
 		<%
 		ArrayList<Exam> exams = (ArrayList<Exam>) request.getSession().getAttribute("exams");
+        if(exams == null) {
+        	response.sendRedirect("./ExamController?action=exams"); 
+            return; 
+        }
+        request.getSession().removeAttribute("exams");
 		Double finalScore = (Double) request.getSession().getAttribute("finalScore");
 		String timeSubmit = (String) request.getSession().getAttribute("timeSubmit");
 		String timeStartExam = (String) request.getSession().getAttribute("timeStartExam");
@@ -27,26 +35,26 @@
 			<table class="styled-table">
 				<thead class="thead-dark">
 					<tr>
-						<th>Mã môn học</th>
-						<th>Tên môn học</th>
-						<th>Số câu hỏi</th>
-						<th>Số phút</th>
-						<th>Giờ bắt đầu</th>
-						<th>Giảng viên</th>
-						<th>Kiểm tra</th>
+						<th class="text-center">Mã môn học</th>
+						<th class="text-center">Tên môn học</th>
+						<th class="text-center">Số câu hỏi</th>
+						<th class="text-center">Số phút</th>
+						<th class="text-center">Giờ bắt đầu</th>
+						<th class="text-center">Giảng viên</th>
+						<th class="text-center">Kiểm tra</th>
 					</tr>
 				</thead>
 				<%
 				for (Exam exam : exams) {
 				%>
 				<tr>
-					<td><%=exam.getSubjectId()%></td>
+					<td class="text-center"><%=exam.getSubjectId()%></td>
 					<td><%=exam.getName()%></td>
-					<td><%=exam.getNumberOfQuestions()%></td>
-					<td><%=exam.getTotalTime()%></td>
-					<td><%=exam.getOpenAt()%></td>
-					<td><%=exam.getTeacherName()%></td>
-					<td>
+					<td class="text-center"><%=exam.getNumberOfQuestions()%></td>
+					<td class="text-center"><%=exam.getTotalTime()%></td>
+					<td class="text-center"><%=exam.getOpenAt()%></td>
+					<td class="text-center"><%=exam.getTeacherName()%></td>
+					<td class="text-center">
 						<button>
 							<a class="dialog-btn" href="#my-dialog"
 								data-exam-id="<%=exam.getExamId()%>"

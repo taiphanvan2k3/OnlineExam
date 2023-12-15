@@ -1,3 +1,25 @@
+const timeInLocalStorage = 'dGltZQ';
+let time = startingMinutes * 60 - 1;
+let isSubmitExam = false;
+
+window.addEventListener('beforeunload', function(event) {
+	if(!isSubmitExam) {
+		saveTimeRemaining();
+	}
+	fullScreen();
+	// Hủy bỏ việc rời đi
+	event.preventDefault();
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+	const jsonData = atob(localStorage.getItem(timeInLocalStorage));
+	if (jsonData) {
+		const remainingTime = JSON.parse(jsonData);
+		time = remainingTime.time;
+		updateTimeout();
+	}
+});
+
 window.onload = function () {
 	const localStorageSelectedAnswers = JSON.parse(localStorage.getItem("selectedAnswers"));
 	if (localStorageSelectedAnswers) {
@@ -16,7 +38,7 @@ window.onload = function () {
 
 // Ngăn chặn sự kiện chuột phải
 document.addEventListener("contextmenu", function (e) {
-    e.preventDefault();
+    // e.preventDefault();
 });
 
 document.addEventListener("click", () => {
@@ -29,17 +51,10 @@ document.addEventListener("keydown", function (event) {
     event.preventDefault();
 });
 
-window.addEventListener("beforeunload", function (event) {
-    fullScreen();
-    // Hủy bỏ việc rời đi
-    event.preventDefault();
-});
-
 navigator.keyboard.lock();
 
-let time = startingMinutes * 60;
-const timeoutElement = document.getElementById("timeout");
-const timeDoExamElement = document.getElementById("examTimeout");
+const timeoutElement = document.getElementById('timeout');
+const timeDoExamElement = document.getElementById('examTimeout');
 
 setInterval(updateTimeout, 1000);
 function updateTimeout() {
@@ -54,7 +69,6 @@ function updateTimeout() {
 }
 
 var selectedAnswers = {};
-
 function updateSelectedAnswers(questionId, answerValue, type, id, className) {
 	const localStorageSelectedAnswers = JSON.parse(localStorage.getItem("selectedAnswers"));
 	if (localStorageSelectedAnswers && localStorageSelectedAnswers.examId === examId) {
@@ -121,4 +135,17 @@ function fullScreen() {
             document.querySelector(".main-content").style.height = "calc(93vh + 5px)";
         }
     });
+}
+
+function saveTimeRemaining() {
+	const data = {
+		time: time
+	};
+	localStorage.setItem(timeInLocalStorage, btoa(JSON.stringify(data)));
+}
+
+function removeLocalStorage() {
+	localStorage.removeItem('selectedAnswers');
+	localStorage.removeItem(timeInLocalStorage);
+	isSubmitExam = true;
 }
