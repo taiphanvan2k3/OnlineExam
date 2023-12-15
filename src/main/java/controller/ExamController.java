@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -14,9 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.BEAN.Exam;
@@ -56,8 +53,8 @@ public class ExamController extends HttpServlet {
 			String timeout = (String) request.getParameter("exam-timeout");
 			request.getSession().setAttribute("examTimeout", timeout);
 			String password = (String) request.getParameter("password");
-//			Timestamp openAt = (Timestamp) request.getParameter("exam-openAt");
 			if ((new ExamBO()).checkPasswordExam(examId, password)) {
+				request.getSession().setAttribute("examInfo", (new ExamBO()).getExamInfo(Integer.parseInt(examId)));
 				request.getSession().setAttribute("examQuestion", (new ExamBO()).getListQuestionsByExamId(examId));
 				destination = "/do-exam.jsp";
 			} else {

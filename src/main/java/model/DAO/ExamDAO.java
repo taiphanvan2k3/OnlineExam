@@ -5,16 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 import model.BEAN.Exam;
 import model.BEAN.Question;
 import model.BEAN.ResponseInfo;
 import model.BEAN.Result;
+import model.BEAN.SimpleExam;
 import util.Utils;
 
 public class ExamDAO {
@@ -155,6 +156,23 @@ public class ExamDAO {
 		return false;
 	}
 
+	public SimpleExam getExamInfo(int examId) {
+		SimpleExam exam = null;
+		try {
+			Connection connection = Utils.getConnection();
+			String sql = "SELECT kt.name as examName, mh.name as subjectName, totalTime from baikiemtra kt "
+					+ "join monhoc mh on mh.id = kt.maMH where kt.id = ?";
+			PreparedStatement pst = connection.prepareStatement(sql);
+			pst.setInt(1, examId);
+			ResultSet rs = pst.executeQuery();
+			if (rs.next()) {
+				exam = new SimpleExam(rs.getString("examName"), rs.getString("subjectName"), rs.getDouble("totalTime"));
+			}
+		} catch (Exception e) {
+		}
+		return exam;
+	}
+
 	public ArrayList<Question> getListQuestionsByExamId(String examId) {
 		ArrayList<Question> questions = new ArrayList<>();
 		try {
@@ -276,8 +294,8 @@ public class ExamDAO {
 		return results;
 	}
 
-	public void saveResultExam(String studentId, String examId, Double correctQuestions,
-			LocalDateTime openAt, LocalDateTime submitAt) {
+	public void saveResultExam(String studentId, String examId, Double correctQuestions, LocalDateTime openAt,
+			LocalDateTime submitAt) {
 		ArrayList<Result> results = new ArrayList<>();
 		try {
 			Connection connection = Utils.getConnection();
