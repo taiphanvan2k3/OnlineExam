@@ -15,45 +15,41 @@ window.onload = function () {
 
 // Ngăn chặn sự kiện chuột phải
 document.addEventListener("contextmenu", function (e) {
-	e.preventDefault();
+    e.preventDefault();
 });
 
 document.addEventListener("click", () => {
-	// Nếu đang không full màn hình thì trả về null
-	if (!document.fullscreenElement) {
-		document.querySelector('.main-content').style.border = '2px solid red';
-		document.documentElement.requestFullscreen().catch((e) => {
-			console.log(e);
-		});
-	}
-
-	document.addEventListener("fullscreenchange", function () {
-		if (document.fullscreenElement) {
-			document.querySelector('.main-content').style.height = 'calc(93vh + 17px)';
-		} else {
-			document.querySelector('.main-content').style.height = 'calc(93vh + 5px)';
-		}
-	});
+    fullScreen();
+    blockMouseWheelBack();
 });
 
-document.addEventListener('keydown', function (event) {
-	event.preventDefault();
+document.addEventListener("keydown", function (event) {
+    // Rest of your keydown event handling code
+    event.preventDefault();
 });
+
+window.addEventListener("beforeunload", function (event) {
+    fullScreen();
+    // Hủy bỏ việc rời đi
+    event.preventDefault();
+});
+
+navigator.keyboard.lock();
 
 let time = startingMinutes * 60;
-const timeoutElement = document.getElementById('timeout');
-const timeDoExamElement = document.getElementById('examTimeout');
+const timeoutElement = document.getElementById("timeout");
+const timeDoExamElement = document.getElementById("examTimeout");
 
 setInterval(updateTimeout, 1000);
 function updateTimeout() {
-	const minutes = Math.floor(time / 60);
-	let seconds = time % 60;
-	timeoutElement.innerHTML = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
-	timeDoExamElement.value = timeoutElement.innerHTML;
-	if (time <= 0) {
-		document.forms[0].submit();
-	}
-	time--;
+    const minutes = Math.floor(time / 60);
+    let seconds = time % 60;
+    timeoutElement.innerHTML = String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0");
+    timeDoExamElement.value = timeoutElement.innerHTML;
+    if (time <= 0) {
+        document.forms[0].submit();
+    }
+    time--;
 }
 
 var selectedAnswers = {};
@@ -105,4 +101,22 @@ function isCheckedInput(questionId, answerValue, selectedAnswersObject) {
 		return selectedAnswersObject[questionId].includes(answerValue);
 	}
 	return false;
+}
+
+function fullScreen() {
+    // Nếu đang không full màn hình thì trả về null
+    if (!document.fullscreenElement) {
+        document.querySelector(".main-content").style.border = "2px solid red";
+        document.documentElement.requestFullscreen().catch((e) => {
+            console.log(e);
+        });
+    }
+
+    document.addEventListener("fullscreenchange", function () {
+        if (document.fullscreenElement) {
+            document.querySelector(".main-content").style.height = "calc(93vh + 17px)";
+        } else {
+            document.querySelector(".main-content").style.height = "calc(93vh + 5px)";
+        }
+    });
 }
