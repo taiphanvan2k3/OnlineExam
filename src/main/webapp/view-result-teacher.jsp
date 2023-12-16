@@ -93,7 +93,7 @@
               <tr class="active-row">
                 <td><%=examDetail.getStudentId()%></td>
                 <td><%=examDetail.getStudentName()%></td>
-                <td class="text-center"><%=examDetail.getCorrectQuestions()%>/<%=examDetail.getNumQuestions()%></td>
+                <td class="text-center"><%=examDetail.getCorrectQuestions()%>/10</td>
               </tr>
               <%
               }

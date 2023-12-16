@@ -283,10 +283,11 @@ public class ExamDAO {
 					ResultSet rs = st.executeQuery(query);
 					while (rs.next()) {
 						results.add(new Result(rs.getString("studentId"), rs.getString("fullname"),
-								Integer.parseInt(rs.getString("correctQuestions")),
+								Double.parseDouble(rs.getString("correctQuestions")),
 								Integer.parseInt(rs.getString("numberQuestion")), rs.getString("examName")));
 					}
 				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 		} catch (Exception e) {
