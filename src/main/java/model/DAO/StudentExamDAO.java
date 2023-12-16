@@ -67,7 +67,7 @@ public class StudentExamDAO {
 				HistoryDoExam history = new HistoryDoExam();
 				history.setNameOfExam(rs.getString("examName"));
 				history.setSubjectName(rs.getString("subjectName"));
-				history.setCorrectQuestions(rs.getInt("correctQuestions"));
+				history.setCorrectQuestions(rs.getDouble("correctQuestions"));
 				history.setOpenAt(rs.getTimestamp("studentOpenAt"));
 				history.setSubmitAt(rs.getTimestamp("submitAt"));
 				history.setTotalQuestions(rs.getInt("totalQuestions"));

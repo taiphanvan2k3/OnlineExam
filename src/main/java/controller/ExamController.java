@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import model.BEAN.Exam;
 import model.BEAN.Question;
 import model.BEAN.ResponseInfo;
+import model.BEAN.ResultAfterCheck;
 import model.BO.ExamBO;
 import model.BO.SubjectBO;
 import util.Utils;
@@ -154,6 +155,9 @@ public class ExamController extends HttpServlet {
 		Duration timeDoExam = duration1.minus(duration2);
 		LocalDateTime timeStartExam = timeSubmit.minus(timeDoExam);
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss a");
+
+		// Số câu đúng và số điểm
+		double correctQuestions = 0;
 		double finalScore = 0;
 		if (selectedAnswers.equals("")) {
 			finalScore = 0;
@@ -164,13 +168,15 @@ public class ExamController extends HttpServlet {
 			try {
 				selectedAnswersMap = mapper.readValue(selectedAnswers, new TypeReference<Map<String, String[]>>() {
 				});
-				finalScore = (new ExamBO()).getFinalScore(selectedAnswersMap, examId);
+				ResultAfterCheck resultAfterCheck = (new ExamBO()).getFinalScore(selectedAnswersMap, examId);
+				correctQuestions = resultAfterCheck.getCorrectQuestions();
+				finalScore = resultAfterCheck.getFinalScore();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		(new ExamBO()).saveResultExam((String) request.getSession().getAttribute("username"),
-				(String) request.getSession().getAttribute("examId"), finalScore, timeStartExam, timeSubmit);
+				(String) request.getSession().getAttribute("examId"), correctQuestions, timeStartExam, timeSubmit);
 		request.getSession().setAttribute("finalScore", finalScore);
 		request.getSession().setAttribute("timeSubmit", timeSubmit.format(formatter));
 		request.getSession().setAttribute("timeStartExam",

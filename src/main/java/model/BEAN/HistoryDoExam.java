@@ -9,7 +9,7 @@ public class HistoryDoExam {
 	private Timestamp openAt;
 	private Timestamp submitAt;
 	private int totalQuestions;
-	private int correctQuestions;
+	private double correctQuestions;
 	private double totalTimeOfExam;
 
 	public String getSubjectId() {
@@ -60,11 +60,11 @@ public class HistoryDoExam {
 		this.totalQuestions = totalQuestions;
 	}
 
-	public int getCorrectQuestions() {
+	public double getCorrectQuestions() {
 		return correctQuestions;
 	}
 
-	public void setCorrectQuestions(int correctQuestions) {
+	public void setCorrectQuestions(double correctQuestions) {
 		this.correctQuestions = correctQuestions;
 	}
 
