@@ -3,11 +3,11 @@ package model.BEAN;
 public class Result {
 	private String studentId;
 	private String studentName;
-	private int correctQuestions;
+	private double correctQuestions;
 	private int numQuestions;
 	private String examName;
 
-	public Result(String studentId, String studentName, int correctQuestions, int numQuestions, String examName) {
+	public Result(String studentId, String studentName, double correctQuestions, int numQuestions, String examName) {
 		this.studentId = studentId;
 		this.studentName = studentName;
 		this.correctQuestions = correctQuestions;
@@ -31,11 +31,11 @@ public class Result {
 		this.studentName = studentName;
 	}
 
-	public int getCorrectQuestions() {
-		return correctQuestions;
+	public double getCorrectQuestions() {
+	    return correctQuestions;
 	}
 
-	public void setCorrectQuestions(int correctQuestions) {
+	public void setCorrectQuestions(double correctQuestions) {
 		this.correctQuestions = correctQuestions;
 	}
 
@@ -54,4 +54,12 @@ public class Result {
 	public void setExamName(String examName) {
 		this.examName = examName;
 	}
+
+	@Override
+	public String toString() {
+		return "Result [studentId=" + studentId + ", studentName=" + studentName + ", correctQuestions="
+				+ correctQuestions + ", numQuestions=" + numQuestions + ", examName=" + examName + "]";
+	}
+	
+	
 }
