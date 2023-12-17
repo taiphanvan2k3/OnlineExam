@@ -70,12 +70,22 @@
           </div>
           <%
           for (Question question : examQuestion) {
+        	  String encodeQuestion = question.getQuestion().replaceAll("&", "&amp;")
+                      .replaceAll("<", "&lt;")
+                      .replaceAll(">", "&gt;")
+                      .replaceAll("\"", "&quot;")
+                      .replaceAll("'", "&#39;");
           %>
           <h3 style="margin-bottom: 10px;">
             Câu
-            <%=index + "/" + examQuestion.size() + ": " + question.getQuestion()%></h3>
+            <%=index + "/" + examQuestion.size() + ": " + encodeQuestion%></h3>
           <%
           for (int i = 0; i < question.getAnswers().length; i++) {
+        	  String encodeAnswer = question.getAnswers()[i].replaceAll("&", "&amp;")
+                      .replaceAll("<", "&lt;")
+                      .replaceAll(">", "&gt;")
+                      .replaceAll("\"", "&quot;")
+                      .replaceAll("'", "&#39;");
           %>
           <%
           if (question.getType().equals("multiple")) {
@@ -91,7 +101,7 @@
               value="<%=question.getId()%>;<%=String.valueOf((char) (65 + i))%>"
               onclick="event.stopPropagation(); updateSelectedAnswers('<%=question.getId()%>', '<%=String.valueOf((char) (65 + i))%>', 'checkbox', this.id, '')"
             >
-            <label for="option<%=i%>"><%=String.valueOf((char) (65 + i)) + ") " + question.getAnswers()[i]%></label>
+            <label for="option<%=i%>"><%=String.valueOf((char) (65 + i)) + ") " + encodeAnswer%></label>
             <br>
           </div>
           <%
@@ -104,7 +114,7 @@
               value="<%=question.getId()%>;<%=String.valueOf((char) (65 + i))%>"
               onclick="event.stopPropagation(); updateSelectedAnswers('<%=question.getId()%>', '<%=String.valueOf((char) (65 + i))%>', 'radio', this.id, 'radio<%=index%>')"
             >
-            <label for="option<%=i%>"><%=String.valueOf((char) (65 + i)) + ") " + question.getAnswers()[i]%></label>
+            <label for="option<%=i%>"><%=String.valueOf((char) (65 + i)) + ") " + encodeAnswer%></label>
             <br>
           </div>
           <%

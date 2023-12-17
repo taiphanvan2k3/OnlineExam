@@ -38,7 +38,7 @@ window.onload = function () {
 
 // Ngăn chặn sự kiện chuột phải
 document.addEventListener("contextmenu", function (e) {
-    // e.preventDefault();
+    e.preventDefault();
 });
 
 document.addEventListener("click", () => {
@@ -47,7 +47,6 @@ document.addEventListener("click", () => {
 });
 
 document.addEventListener("keydown", function (event) {
-    // Rest of your keydown event handling code
     event.preventDefault();
 });
 
