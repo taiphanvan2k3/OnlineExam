@@ -8,6 +8,7 @@ import model.BEAN.Exam;
 import model.BEAN.Question;
 import model.BEAN.ResponseInfo;
 import model.BEAN.Result;
+import model.BEAN.ResultAfterCheck;
 import model.BEAN.SimpleExam;
 import model.DAO.ExamDAO;
 
@@ -36,7 +37,7 @@ public class ExamBO {
 		return (new ExamDAO()).getListQuestionsByExamId(examId);
 	}
 
-	public double getFinalScore(Map<String, String[]> selectedAnswersMap, String examId) {
+	public ResultAfterCheck getFinalScore(Map<String, String[]> selectedAnswersMap, String examId) {
 		return (new ExamDAO()).getFinalScore(selectedAnswersMap, examId);
 	}
 
@@ -48,7 +49,7 @@ public class ExamBO {
 		return (new ExamDAO()).getListResultExamByExamId(examId);
 	}
 
-	public void saveResultExam(String studentId, String examId, Double correctQuestions, LocalDateTime openAt,
+	public void saveResultExam(String studentId, String examId, double correctQuestions, LocalDateTime openAt,
 			LocalDateTime submitAt) {
 		(new ExamDAO()).saveResultExam(studentId, examId, correctQuestions, openAt, submitAt);
 	}

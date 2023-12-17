@@ -15,6 +15,7 @@ import model.BEAN.Exam;
 import model.BEAN.Question;
 import model.BEAN.ResponseInfo;
 import model.BEAN.Result;
+import model.BEAN.ResultAfterCheck;
 import model.BEAN.SimpleExam;
 import util.Utils;
 
@@ -196,10 +197,10 @@ public class ExamDAO {
 		return questions;
 	}
 
-	public double getFinalScore(Map<String, String[]> selectedAnswersMap, String examId) {
+	public ResultAfterCheck getFinalScore(Map<String, String[]> selectedAnswersMap, String examId) {
 		double finalScore = 0;
+		double totalScore = 0;
 		try {
-			double totalScore = 0;
 			int numberQuestion = 0;
 			Connection connection = Utils.getConnection();
 			String sql = "SELECT bkt.numberQuestion, ch.* FROM baikiemtra_cauhoi bc "
@@ -230,7 +231,7 @@ public class ExamDAO {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-		return finalScore;
+		return new ResultAfterCheck(totalScore, finalScore);
 	}
 
 	private int countCommonElements(String[] array1, String[] array2) {
@@ -295,9 +296,8 @@ public class ExamDAO {
 		return results;
 	}
 
-	public void saveResultExam(String studentId, String examId, Double correctQuestions, LocalDateTime openAt,
+	public void saveResultExam(String studentId, String examId, double correctQuestions, LocalDateTime openAt,
 			LocalDateTime submitAt) {
-		ArrayList<Result> results = new ArrayList<>();
 		try {
 			Connection connection = Utils.getConnection();
 			PreparedStatement preparedStatement = null;
